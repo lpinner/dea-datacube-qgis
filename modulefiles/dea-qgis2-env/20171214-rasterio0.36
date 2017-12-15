@@ -1,0 +1,50 @@
+#%Module########################################################################
+##
+## dea-qgis2-env modulefile
+##
+
+set name          dea-qgis2-env
+set version       20171214-rasterio0.36
+set pluginname    dea-qgis2
+set pluginversion 0.0.0
+set confpath      ~/.$pluginname
+
+set base	  [file normalize $ModulesCurrentModulefile/../../..]
+
+proc ModulesHelp { } {
+        global version
+
+        puts stderr "   Datacube QGIS environment module"
+        puts stderr "   Version $version"
+}
+
+module-whatis   "Datacube QGIS environment module $version"
+
+if { [module-info mode load] } {
+    if {[info exists env(PYTHONPATH)] && $env(PYTHONPATH) != ""} {
+        puts stderr "Warning: PYTHONPATH is $env(PYTHONPATH)"
+        puts stderr "Try unloading all python modules if you experience any issues."
+    }
+}
+
+prepend-path PYTHONPATH $base/$name/$version/envs/$pluginname/lib/python2.7/site-packages
+prepend-path PYTHONPATH $base/$name/$version/envs/$pluginname/lib/python2.7
+prepend-path PATH $base/$name/$version/envs/$pluginname/bin
+setenv GDAL_DATA $base/$name/$version/envs/$pluginname/share/gdal
+setenv PROJ_LIB $base/$name/$version/envs/$pluginname/share/proj
+setenv CONDA_PREFIX $base/$name/$version/envs/$pluginname
+
+# https://github.com/conda-forge/gdal-feedstock/issues/83
+setenv CPL_ZIP_ENCODING UTF-8
+
+# This disables loading modules and .pth files from ~/.local/lib/pythonX.Y/...
+setenv PYTHONUSERBASE ~/.$name/$version/local
+setenv PYTHONNOUSERSITE 1
+
+setenv LC_ALL en_AU.utf8
+setenv LANG C.UTF-8
+setenv FONTCONFIG_FILE $base/$name/$version/envs/$pluginname/etc/fonts/fonts.conf
+setenv FONTCONFIG_PATH $base/$name/$version/envs/$pluginname/etc/fonts/
+
+set-alias qgis "$base/$name/$version/envs/$pluginname/bin/qgis --configpath $confpath --optionspath $confpath"
+

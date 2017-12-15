@@ -1,0 +1,25 @@
+#%Module########################################################################
+##
+## dea-qgis2 modulefile
+##
+
+set version       0.0.0
+set name          dea-qgis2
+
+set base	  [file normalize $ModulesCurrentModulefile/../../..]
+
+proc ModulesHelp { } {
+        global version
+
+        puts stderr "   A QGIS plugin for Datacube data"
+        puts stderr "   Version $version"
+	puts stderr "   "
+	puts stderr "   To use this plugin, first you must enable it:"
+	puts stderr "     - Plugins menu -> Manage and Install Plugins -> Installed -> Open Data Cube Query"
+	puts stderr "     - Processing menu -> Providers -> Open Data Cube Query Algorithms - > activate"
+}
+
+module-whatis   "A QGIS plugin for Datacube data"
+
+setenv QGIS_PLUGINPATH $base/$name/$version/plugins
+

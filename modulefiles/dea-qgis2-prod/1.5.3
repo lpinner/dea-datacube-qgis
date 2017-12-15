@@ -1,0 +1,51 @@
+#%Module########################################################################
+##
+## dea-qgis2-prod modulefile
+##
+
+proc ModulesHelp { } {
+        puts stderr DEA prod instance
+}
+
+set version       1.5.3 
+set name          dea-qgis2-prod
+set pluginname    dea-qgis2
+set pluginversion 0.0.0
+set envname       dea-qgis2-env
+set envversion    20171215-rasterio1.0
+
+set base	  [file normalize $ModulesCurrentModulefile/../../..]
+
+module-whatis "DEA QGIS2 prod instance"
+
+if { ! [is-loaded $envname/$envversion] } {
+    module load $envname/$envversion
+}
+
+if { ! [is-loaded $pluginname/$pluginversion] } {
+    module load $pluginname/$pluginversion
+}
+
+
+if { [module-info mode load] } {
+    if { [catch {exec -ignorestderr  $base/$name/$version/datacube-ensure-user.py 130.56.244.105 6432} results options] } {
+        puts stderr "Error: database connection check failed!"
+        puts stderr "  see log above for more details"
+    }
+    
+    if { [file exists ~/.datacube.conf]==1 } {
+        puts stderr "Warning: ~/.datacube.conf detected"
+        puts stderr "  it might conflict with this module"
+        puts stderr "  consider removing or renaming it"
+    }
+}
+
+setenv DATACUBE_CONFIG_PATH $base/$name/$version/datacube.conf
+
+if { [ module-info mode remove ] } {
+    module unload $envname
+}
+if { [ module-info mode remove ] } {
+    module unload $pluginname
+}
+
