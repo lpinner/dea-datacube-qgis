@@ -17,11 +17,10 @@ qgis
   	- Processing menu -> Providers -> Open Data Cube Query Algorithms -> activate
     - The tools will be available from the Processing toolbox
 
+![Plugin Menu](images/plugin_menu.png)
 
-!(images/plugin_menu.png "Plugin Menu")
+![Processing Options](images/processing_options.png)
 
-!(images/processing_options.png "Processing Options")
-
-!(images/algorithm.png "Algorithm")
+![Algorithm](images/algorithm.png)
 
      
