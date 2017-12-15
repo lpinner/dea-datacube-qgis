@@ -18,5 +18,10 @@ qgis
     - The tools will be available from the Processing toolbox
 
 
+!(images/plugin_menu.png "Plugin Menu")
+
+!(images/processing_options.png "Processing Options")
+
+!(images/algorithm.png "Algorithm")
 
      
